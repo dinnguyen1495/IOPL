@@ -20,8 +20,11 @@ class BookResource(resources.ModelResource):
         import_id_fields = ('book_id',)
         exclude = ('id',)
         skip_unchanged = True
-        fields = ('book_id', 'type', 'field', 'authors', 'title', 'publisher', 'year', 'edition', 'isbn',
-                  'inventory_number', 'units',)
+        fields = ('ID', 'Type', 'Field', 'Authors', 'Title', 'Publisher', 'Year of publication', 'Edition', 'ISBN',
+                  'Inventory number', 'Units',)
 
     def skip_row(self, instance, original, row, import_validation_errors=None):
-        pass
+        return row["ID"] == '' or row["ISBN"] == '' or row["Year of publication"] == ''
+
+    def before_import_row(self, row, row_number=None, **kwargs):
+        return super(BookResource, self).import_row(row, row, row_number, **kwargs)
