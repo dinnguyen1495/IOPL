@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import Group
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ImportExportModelAdmin, ImportMixin, ExportMixin
+from import_export.formats import base_formats
 
 from .models import Book, Holder
 from .resources import BookResource
@@ -62,6 +63,24 @@ class BookAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         for borrower in Holder.objects.filter(borrowed_book=obj):
             result += f"{borrower.date}\n"
         return result
+
+    def get_import_formats(self):
+        formats = (
+            base_formats.XLSX,
+            base_formats.XLS,
+            base_formats.CSV,
+            base_formats.ODS,
+        )
+        return [f for f in formats if f().can_export()]
+
+    def get_export_formats(self):
+        formats = (
+            base_formats.XLSX,
+            base_formats.XLS,
+            base_formats.CSV,
+            base_formats.ODS,
+        )
+        return [f for f in formats if f().can_export()]
 
 
 class HolderAdmin(admin.ModelAdmin):
