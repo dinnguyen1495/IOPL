@@ -1,3 +1,11 @@
+$('#search-box').keyup(function (event) {
+    event.preventDefault();
+    let keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode === '13'){
+        $("#search-btn").click();
+    }
+});
+
 function update_book_list(data) {
     console.log(data);
     let filtered_list = "";
@@ -7,13 +15,14 @@ function update_book_list(data) {
             "    <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
             "    <div class=\"book-information\">\n" +
             "        <ul class=\"book-information-list\">\n" +
-            "            <li>Title: " + data["books"][i]["title"] + "</li>\n" +
-            "            <li>Authors: " + data["books"][i]["authors"] + "</li>\n" +
-            "            <li>Publisher: " + data["books"][i]["publisher"] + "</li>\n" +
-            "            <li>Field: " + data["books"][i]["field"] + "</li>\n" +
-            "            <li>Year: " + data["books"][i]["year"] + "</li>\n" +
-            "            <li>Edition: " + data["books"][i]["edition"] + "</li>\n" +
-            "            <li>Available: " + data["books"][i]["available"] + "</li>\n" +
+            "            <li><b>Title:</b> " + data["books"][i]["title"] + "</li>\n" +
+            "            <li><b>Authors:</b> " + data["books"][i]["authors"] + "</li>\n" +
+            "            <li><b>Publisher:</b> " + data["books"][i]["publisher"] + "</li>\n" +
+            "            <li><b>Field:</b> " + data["books"][i]["field"] + "</li>\n" +
+            "            <li><b>Year:</b> " + data["books"][i]["year"] + "</li>\n" +
+            "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
+            "            <li><b>ISBN:</b> " + data["books"][i]["isbn"] + "</li>\n" +
+            "            <li><b>Available:</b> " + data["books"][i]["available"] + "</li>\n" +
             "        </ul>\n" +
             "    </div>\n" +
             "</div>";
@@ -42,3 +51,4 @@ function search_book() {
         dataType: "json"
     });
 }
+

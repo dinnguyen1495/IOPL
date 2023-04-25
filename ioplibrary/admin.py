@@ -51,8 +51,11 @@ class BookAdmin(ImportExportModelAdmin):
             pass
 
         if not change:
-            obj.book_id = Book.objects.count() + 100
-        obj.inventory_number = f"{obj.book_id} CSST {get_type(obj.type)} {obj.year}"
+            if Book.objects.count() == 0:
+                obj.book_id = 101
+            else:
+                obj.book_id = Book.objects.filter().order_by('book_id').last().book_id + 1
+            obj.inventory_number = f"{obj.book_id} CSST {get_type(obj.type)} {obj.year}"
         obj.save()
         return super(BookAdmin, self).save_model(request, obj, form, change)
 

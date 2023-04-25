@@ -135,13 +135,13 @@ class Book(models.Model):
         self.publisher = self.publisher.strip()
         self.inventory_number = self.inventory_number.strip()
 
-        print(f"Cover URL: {self.cover_url}")
-        if self.cover == "":
-            if self.publisher == "LUH":
-                self.cover_url = get_cover_luh(self.isbn)
-            else:
-                self.cover_url = get_cover_ddg(title=self.title, isbn=self.isbn)
-            self.cover = save_cover(self.cover_url, self.isbn)
+        # print(f"Cover URL: {self.cover_url}")
+        # if self.cover == "":
+        #     if self.publisher == "LUH":
+        #         self.cover_url = get_cover_luh(self.isbn)
+        #     else:
+        #         self.cover_url = get_cover_ddg(title=self.title, isbn=self.isbn)
+        #     self.cover = save_cover(self.cover_url, self.isbn)
 
         return super(Book, self).save(force_insert, force_update, using, update_fields)
 

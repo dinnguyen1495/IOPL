@@ -43,6 +43,10 @@ body {
     border: 1px solid #1b1b1b;
 }
 
+ul {
+    list-style-type: none;
+}
+
 li {
     padding: 10px 0;
 }
