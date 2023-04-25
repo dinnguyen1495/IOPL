@@ -1,9 +1,21 @@
 {% extends "admin/base.html" %}
 {% load static %}
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block branding %}
+    <h1>
+        <a href="{% url 'admin:index' %}">
+            <img src="{% static 'logo.png' %}" height="40px" alt=""/>
+        </a>
+    </h1>
+{% endblock %}
 {% block extrahead %}
     <style>
         .field-inventory_number {
             white-space: nowrap;
+        }
+
+        .aligned p.file-upload {
+            margin-left: 0;
         }
     </style>
 {% endblock %}
