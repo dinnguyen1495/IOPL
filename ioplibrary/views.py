@@ -42,8 +42,8 @@ def search_book(request):
             }
 
             if column == 'all':
-                for q in query_dict.values():
-                    queryset = queryset | q
+                queryset = query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | query_dict["year"] \
+                           | query_dict["edition"]
             else:
                 queryset = query_dict[column]
 
