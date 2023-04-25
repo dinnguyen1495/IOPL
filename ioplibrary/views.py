@@ -55,6 +55,7 @@ def search_book(request):
                 "field": book.field.field_name,
                 "year": book.year,
                 "edition": book.edition,
+                "isbn": book.isbn,
                 "available": book.get_availability(),
                 "cover": book.cover.url
             }

@@ -31,6 +31,7 @@ def get_cover_ddg(**query):
             max_results=20,
             download=False
         )
+
         for result in ddg_query:
             print(q)
             print(result)

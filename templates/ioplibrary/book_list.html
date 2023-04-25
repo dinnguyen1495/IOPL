@@ -9,7 +9,7 @@
 
 {% block content %}
     <div id="welcome-text">
-        <h1>Welcome to IOP's Library</h1>
+        <h1><a href="{% url 'book_list' %}">Welcome to IOP's Library</a></h1>
         <br>
         With this website you can search for books and check availability for borrowing books from IOP's Library
     </div>
@@ -49,13 +49,14 @@
             <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
             <div class="book-information">
                 <ul class="book-information-list">
-                    <li>Title: {{ book.title }}</li>
-                    <li>Authors: {{ book.authors }}</li>
-                    <li>Publisher: {{ book.publisher }}</li>
-                    <li>Field: {{ book.field }}</li>
-                    <li>Year: {{ book.year }}</li>
-                    <li>Edition: {{ book.edition }}</li>
-                    <li>Available: {{ book.get_availability }}</li>
+                    <li><b>Title:</b> {{ book.title }}</li>
+                    <li><b>Authors:</b> {{ book.authors }}</li>
+                    <li><b>Publisher:</b> {{ book.publisher }}</li>
+                    <li><b>Field:</b> {{ book.field }}</li>
+                    <li><b>Year:</b> {{ book.year }}</li>
+                    <li><b>Edition:</b> {{ book.edition }}</li>
+                    <li><b>ISBN:</b> {{ book.isbn }}</li>
+                    <li><b>Available:</b> {{ book.get_availability }}</li>
                 </ul>
             </div>
         </div>
