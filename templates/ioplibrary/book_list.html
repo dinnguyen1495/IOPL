@@ -1,0 +1,68 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block custom_header %}
+<link rel="stylesheet" href="{% static 'ioplibrary/css/book_list.css' %}">
+{% endblock custom_header %}
+
+{% block title %} IOP's Library {% endblock title %}
+
+{% block content %}
+    <div id="welcome-text">
+        <h1>Welcome to IOP's Library</h1>
+        <br>
+        With this website you can search for books and check availability for borrowing books from IOP's Library
+    </div>
+    <div id="search-form">
+        <form name="iopl-filter">
+            <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="80" maxlength="100"
+                   value="">
+            <input id="search-btn" type="button" onclick="search_book()" value="Search!">
+            <div class="search-filter">
+                <b>Search in fields: </b>
+                <span class="search-option">
+                    <input class="search-option" type="radio" name="field" value="All" checked="checked"> All
+                </span>
+                {% for field in field_list %}
+                <span class="search-option">
+                    <input class="search-option" type="radio" name="field" value="{{ field.field_name }}"> {{ field.field_name }}
+                </span>
+                {% endfor %}
+            </div>
+            <div class="search-filter">
+                <b>Search in information: </b>
+                <span class="search-option">
+                    <input class="search-option" type="radio" name="column" value="All" checked="checked"> All
+                </span>
+                {% for column in book_columns %}
+                <span class="search-option">
+                    <input class="search-option" type="radio" name="column" value="{{ column }}"> {{ column }}
+                </span>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+
+    <div id="book-list">
+        {% for book in object_list %}
+        <div class="book-container">
+            <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
+            <div class="book-information">
+                <ul class="book-information-list">
+                    <li>Title: {{ book.title }}</li>
+                    <li>Authors: {{ book.authors }}</li>
+                    <li>Publisher: {{ book.publisher }}</li>
+                    <li>Field: {{ book.field }}</li>
+                    <li>Year: {{ book.year }}</li>
+                    <li>Edition: {{ book.edition }}</li>
+                    <li>Available: {{ book.get_availability }}</li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block custom_js %}
+<script src={% static "ioplibrary/js/book_list.js" %}></script>
+{% endblock custom_js %}
