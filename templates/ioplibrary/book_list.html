@@ -13,29 +13,43 @@
         <br>
         With this website you can search for books and check availability for borrowing books from IOP's Library
     </div>
-    <div id="search-form">
-        <form name="iopl-filter">
-            <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="80" maxlength="100"
-                   value="">
-            <input id="search-btn" type="button" onclick="search_book()" value="Search!">
+    <div id="search-container">
+        <form id="search-form">
+            {% csrf_token %}
+            <div class="search-input">
+                <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="80" maxlength="100"
+                       value="">
+                <input id="search-btn" type="button" onclick="search_book()" value="Search!">
+            </div>
+            <div class="search-filter">
+                <b>Search by type: </b>
+                <span class="search-choice">
+                    <input class="search-option" type="radio" name="book_type" value="All" checked="checked"> All
+                </span>
+                {% for type in types %}
+                <span class="search-choice">
+                    <input class="search-option" type="radio" name="book_type" value="{{ type }}"> {{ type }}
+                </span>
+                {% endfor %}
+            </div>
             <div class="search-filter">
                 <b>Search in fields: </b>
-                <span class="search-option">
+                <span class="search-choice">
                     <input class="search-option" type="radio" name="field" value="All" checked="checked"> All
                 </span>
                 {% for field in field_list %}
-                <span class="search-option">
+                <span class="search-choice">
                     <input class="search-option" type="radio" name="field" value="{{ field.field_name }}"> {{ field.field_name }}
                 </span>
                 {% endfor %}
             </div>
             <div class="search-filter">
                 <b>Search in information: </b>
-                <span class="search-option">
+                <span class="search-choice">
                     <input class="search-option" type="radio" name="column" value="All" checked="checked"> All
                 </span>
                 {% for column in book_columns %}
-                <span class="search-option">
+                <span class="search-choice">
                     <input class="search-option" type="radio" name="column" value="{{ column }}"> {{ column }}
                 </span>
                 {% endfor %}
@@ -52,6 +66,7 @@
                     <li><b>Title:</b> {{ book.title }}</li>
                     <li><b>Authors:</b> {{ book.authors }}</li>
                     <li><b>Publisher:</b> {{ book.publisher }}</li>
+                    <li><b>Type:</b> {{ book.type }}</li>
                     <li><b>Field:</b> {{ book.field }}</li>
                     <li><b>Year:</b> {{ book.year }}</li>
                     <li><b>Edition:</b> {{ book.edition }}</li>
