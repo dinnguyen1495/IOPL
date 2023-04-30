@@ -2,10 +2,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
 import datetime
-import requests
+from os.path import exists
+
 from .validators import CommaSeparatedStringValidator, ISBNValidator, YearValidator
-from .parameters import *
-from .query_image import *
+from .constants import *
+from .query_cover import *
 
 
 # Create your models here.
@@ -104,7 +105,7 @@ class Book(models.Model):
         "Units",
         default=1,
     )
-    cover = models.FileField(
+    cover = models.ImageField(
         "Cover's Path",
         upload_to=f"{COVERS_DIR}",
         blank=True,
@@ -121,27 +122,32 @@ class Book(models.Model):
         return self.title
 
     def display_cover(self):
-        return mark_safe(f'<img src="{self.cover.url}" width="120" />')
-    display_cover.short_description = 'Preview'
+        return mark_safe(f'<img src="{self.cover.url}" width="150" />')
+    display_cover.short_description = "Cover's Preview"
     display_cover.allow_tags = True
 
-    def get_availability(self):
+    def get_availability(self) -> int:
         return self.units - Holder.objects.filter(borrowed_book=self).count()
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.isbn = self.isbn.replace("-", "")
+        self.isbn = self.isbn.strip()
         self.title = self.title.strip()
         self.authors = self.authors.strip()
         self.publisher = self.publisher.strip()
         self.inventory_number = self.inventory_number.strip()
 
-        # print(f"Cover URL: {self.cover_url}")
-        # if self.cover == "":
-        #     if self.publisher == "LUH":
-        #         self.cover_url = get_cover_luh(self.isbn)
-        #     else:
-        #         self.cover_url = get_cover_ddg(title=self.title, isbn=self.isbn)
-        #     self.cover = save_cover(self.cover_url, self.isbn)
+        if self.cover == f"{COVERS_DIR}/unavailable.jpg":
+            if exists(f"./media/{COVERS_DIR}/{self.isbn}.jpg"):
+                self.cover = f"{COVERS_DIR}/{self.isbn}.jpg"
+            else: 
+                if self.cover_url == "":
+                    if self.publisher != "LUH":
+                        self.cover_url = get_cover_gg(self.title, self.authors)
+                    else:
+                        self.cover_url = get_cover_luh(self.title)
+                else:
+                    self.cover = save_cover(self.cover_url, self.isbn)
+                print()
 
         return super(Book, self).save(force_insert, force_update, using, update_fields)
 
