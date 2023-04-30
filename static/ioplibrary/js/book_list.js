@@ -1,13 +1,4 @@
-$('#search-box').keyup(function (event) {
-    event.preventDefault();
-    let keycode = (event.keyCode ? event.keyCode : event.which);
-    if (keycode === '13'){
-        $("#search-btn").click();
-    }
-});
-
 function update_book_list(data) {
-    console.log(data);
     let filtered_list = "";
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
@@ -18,6 +9,7 @@ function update_book_list(data) {
             "            <li><b>Title:</b> " + data["books"][i]["title"] + "</li>\n" +
             "            <li><b>Authors:</b> " + data["books"][i]["authors"] + "</li>\n" +
             "            <li><b>Publisher:</b> " + data["books"][i]["publisher"] + "</li>\n" +
+            "            <li><b>Book:</b> " + data["books"][i]["type"] + "</li>\n" +
             "            <li><b>Field:</b> " + data["books"][i]["field"] + "</li>\n" +
             "            <li><b>Year:</b> " + data["books"][i]["year"] + "</li>\n" +
             "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
@@ -34,6 +26,7 @@ function update_book_list(data) {
 
 function search_book() {
     let query = $('#search-bar').val();
+    let type = $('input[name=book_type]:radio:checked').val();
     let field = $('input[name=field]:radio:checked').val();
     let column = $('input[name=column]:radio:checked').val().toLowerCase();
 
@@ -42,6 +35,7 @@ function search_book() {
         type: "get",
         data: {
             'query': query,
+            'book_type': type,
             'field': field,
             'column': column
         },
@@ -52,3 +46,26 @@ function search_book() {
     });
 }
 
+$('#search-form').submit(function(e) {
+    e.preventDefault();
+    return false;
+});
+
+$('#search-bar').on('input',function(e) {
+    search_book();
+});
+
+$('input[name=book_type]').on('input',function(e) {
+    search_book();
+    $('#search-bar').focus();
+});
+
+$('input[name=field]').on('input',function(e) {
+    search_book();
+    $('#search-bar').focus();
+});
+
+$('input[name=column]').on('input',function(e) {
+    search_book();
+    $('#search-bar').focus();
+});

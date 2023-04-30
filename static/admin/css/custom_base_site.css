@@ -1,0 +1,20 @@
+.field-inventory_number {
+    white-space: nowrap;
+}
+
+.aligned p.file-upload {
+    margin-left: 0;
+}
+
+#id_title {
+    width: 500px;
+}
+
+.cover-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#preview-cover-btn {
+    margin-top: 20px;
+}
