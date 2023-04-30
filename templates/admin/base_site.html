@@ -1,4 +1,4 @@
-{% extends "admin/base.html" %}
+{% extends "admin/base_site.html" %}
 {% load static %}
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 {% block branding %}
@@ -9,17 +9,5 @@
     </h1>
 {% endblock %}
 {% block extrahead %}
-    <style>
-        .field-inventory_number {
-            white-space: nowrap;
-        }
-
-        .aligned p.file-upload {
-            margin-left: 0;
-        }
-
-        #id_title {
-            width: 500px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'admin/css/custom_base_site.css' %}">
 {% endblock %}
