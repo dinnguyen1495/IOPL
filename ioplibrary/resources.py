@@ -1,6 +1,6 @@
 from import_export import resources, fields, widgets
 from .models import Book, Holder, Field
-from .query_image import *
+from .query_cover import *
 
 
 class BookResource(resources.ModelResource):
@@ -61,9 +61,9 @@ class BookResource(resources.ModelResource):
         return row["ID"] == '' or row["ISBN"] == '' or row["Year of publication"] == ''
 
     def save_instance(self, instance, is_create, using_transactions=True, dry_run=False):
-        # if instance.cover_url == "":
-        #     if instance.publisher == "LUH":
-        #         instance.cover_url = get_cover_luh(instance.isbn)
-        #     else:
-        #         instance.cover_url = get_cover_ddg(title=instance.title, isbn=instance.isbn)
+        if instance.cover_url == "":
+            if instance.publisher != "LUH":
+                instance.cover_url = get_cover_gg(self.title, self.authors)
+            else:
+                instance.cover_url = get_cover_luh(self.title)
         return super(BookResource, self).save_instance(instance, is_create, using_transactions, dry_run)
