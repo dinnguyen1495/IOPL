@@ -4,13 +4,16 @@
 }
 
 body {
-    margin-top: 64px;
-    height: 100%;
+    margin-top: 32px;
     width: 100%;
 }
 
 #welcome-text {
     text-align: center;
+}
+
+#welcome-text h1 a:link {
+    text-decoration: none;
 }
 
 #search-form {
@@ -48,9 +51,9 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 0 48px;
-    padding: 24px;
-    margin: 24px 0;
+    gap: 0 24px;
+    padding: 20px;
+    margin: 8px 0;
     border: 1px solid #1b1b1b;
     font-size: 16px;
 }

@@ -48,6 +48,16 @@ class BookResource(resources.ModelResource):
         column_name='Units',
         attribute='units'
     )
+    borrowers = fields.Field(
+        column_name='Borrowers',
+        attribute='borrowers',
+        widget=widgets.ManyToManyWidget(Borrower, field='borrower_name', separator=',')
+    )
+    borrowed_dates = fields.Field(
+        column_name='Borrowed Dates',
+        attribute='borrowed_dates',
+        widget=widgets.ManyToManyWidget(Borrower, field='borrowed_date', separator=',')
+    )
 
     class Meta:
         model = Book
@@ -55,7 +65,7 @@ class BookResource(resources.ModelResource):
         exclude = ('id',)
         skip_unchanged = True
         fields = ('ID', 'Type', 'Field', 'Authors', 'Title', 'Publisher', 'Year of publication', 'Edition', 'ISBN',
-                  'Inventory number', 'Units')
+                  'Inventory number', 'Units', 'Borrowers', 'Borrowed Dates')
 
     def skip_row(self, instance, original, row, import_validation_errors=None):
         return row["ID"] == '' or row["ISBN"] == '' or row["Year of publication"] == ''

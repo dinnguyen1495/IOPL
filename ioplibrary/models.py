@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.utils import timezone
-from os.path import exists
+import os
 
 from .validators import CommaSeparatedStringValidator, ISBNValidator, YearValidator
 from .constants import *
@@ -60,21 +60,21 @@ class Book(models.Model):
         choices=TypeOfMaterial.choices,
         default=TypeOfMaterial.BOOK,
     )
-    field = models.ForeignKey(
-        "Field",
-        default=get_default_field,
-        null=True,
-        on_delete=models.SET_NULL,
+    title = models.CharField(
+        "Title",
+        max_length=200,
+        unique=True,
     )
     authors = models.CharField(
         "Authors",
         max_length=200,
         validators=[CommaSeparatedStringValidator],
     )
-    title = models.CharField(
-        "Title",
-        max_length=200,
-        unique=True,
+    field = models.ForeignKey(
+        "Field",
+        default=get_default_field,
+        null=True,
+        on_delete=models.SET_NULL,
     )
     publisher = models.CharField(
         "Publisher",
@@ -138,7 +138,7 @@ class Book(models.Model):
         self.inventory_number = self.inventory_number.strip()
 
         if self.cover == f"{COVERS_DIR}/unavailable.jpg":
-            if exists(f"./media/{COVERS_DIR}/{self.isbn}.jpg"):
+            if os.path.exists(f"./media/{COVERS_DIR}/{self.isbn}.jpg"):
                 self.cover = f"{COVERS_DIR}/{self.isbn}.jpg"
             else: 
                 if self.cover_url == "":
@@ -150,6 +150,10 @@ class Book(models.Model):
                     self.cover = save_cover(self.cover_url, self.isbn)
 
         return super(Book, self).save(force_insert, force_update, using, update_fields)
+
+    def delete(self, using=None, keep_parents=False):
+        self.cover.delete()
+        return super(Book, self).delete(using, keep_parents)
 
 
 class Borrower(models.Model):

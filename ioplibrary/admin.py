@@ -26,7 +26,7 @@ class BorrwerInLine(admin.TabularInline):
 
 class BookAdmin(ImportExportModelAdmin):
     model = Book
-    search_fields = ('book_id', 'type', 'authors', 'field__field_name', 'title', 'publisher', 'year', 'edition', 'isbn',
+    search_fields = ('book_id', 'type', 'title', 'authors', 'field__field_name', 'publisher', 'year', 'edition', 'isbn',
                      'inventory_number', 'borrower__borrower_name', 'borrower__borrowed_date')
     list_display = ('display_cover', 'title', 'get_authors', 'field', 'isbn', 'inventory_number', 'get_borrowers', 'get_date')
     list_display_links = ('display_cover', 'title',)

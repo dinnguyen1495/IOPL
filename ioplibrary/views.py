@@ -30,7 +30,7 @@ def search_book(request):
         if book_type != 'All':
             queryset = Book.objects.filter(type=book_type).order_by("-book_id")
         else:
-            queryset = Book.objects.all().order_by("-book_id")
+            queryset = Book.objects.all()
 
         if query == "":
             if field != 'All':
