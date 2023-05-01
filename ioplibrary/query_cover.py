@@ -24,7 +24,7 @@ def get_cover_gg(title: str, authors: str) -> str:
     
     try:
         result_list = gg_service.cse().list(
-            q=f"{title} {authors}",
+            q=f"book {title} {authors}",
             cx=GG_CUSTOM_SEARCH_ENGINE_ID,
             searchType="image",
             imgSize="LARGE",

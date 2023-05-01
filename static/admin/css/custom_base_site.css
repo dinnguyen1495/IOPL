@@ -6,10 +6,6 @@
     margin-left: 0;
 }
 
-#id_title {
-    width: 500px;
-}
-
 .cover-container {
     display: flex;
     flex-direction: column;
@@ -17,4 +13,17 @@
 
 #preview-cover-btn {
     margin-top: 20px;
+}
+
+td.field-title {
+    width: 450px;
+}
+
+.field-get_authors {
+    width: 200px;
+}
+
+th, 
+td {
+    line-height: 1.5;
 }

@@ -33,10 +33,6 @@ body {
     text-align: left;
 }
 
-.book-cover {
-    width: 200px;
-}
-
 .book-container {
     display: flex;
     flex-direction: row;
@@ -46,6 +42,10 @@ body {
     margin: 20px 0;
     border: 1px solid #1b1b1b;
     font-size: 14px;
+}
+
+.book-cover {
+    width: 200px;
 }
 
 ul {

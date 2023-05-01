@@ -1,5 +1,5 @@
 from import_export import resources, fields, widgets
-from .models import Book, Holder, Field
+from .models import Book, Borrower, Field
 from .query_cover import *
 
 
@@ -61,9 +61,21 @@ class BookResource(resources.ModelResource):
         return row["ID"] == '' or row["ISBN"] == '' or row["Year of publication"] == ''
 
     def save_instance(self, instance, is_create, using_transactions=True, dry_run=False):
-        if instance.cover_url == "":
-            if instance.publisher != "LUH":
-                instance.cover_url = get_cover_gg(self.title, self.authors)
+        # if instance.cover_url == "":
+        #     if instance.publisher != "LUH":
+        #         instance.cover_url = get_cover_gg(self.title, self.authors)
+        #     else:
+        #         instance.cover_url = get_cover_luh(self.title)
+        self.before_save_instance(instance, using_transactions, dry_run)
+        if self._meta.use_bulk:
+            if is_create:
+                self.create_instances.append(instance)
             else:
-                instance.cover_url = get_cover_luh(self.title)
+                self.update_instances.append(instance)
+        else:
+            if not using_transactions and dry_run:
+                pass
+            else:
+                instance.save()
+        self.after_save_instance(instance, using_transactions, dry_run)
         return super(BookResource, self).save_instance(instance, is_create, using_transactions, dry_run)

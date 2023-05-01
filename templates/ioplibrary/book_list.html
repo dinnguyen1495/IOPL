@@ -17,9 +17,7 @@
         <form id="search-form">
             {% csrf_token %}
             <div class="search-input">
-                <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="80" maxlength="100"
-                       value="">
-                <input id="search-btn" type="button" onclick="search_book()" value="Search!">
+                <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="100" maxlength="100" value="">
             </div>
             <div class="search-filter">
                 <b>Search by type: </b>
@@ -71,6 +69,7 @@
                     <li><b>Year:</b> {{ book.year }}</li>
                     <li><b>Edition:</b> {{ book.edition }}</li>
                     <li><b>ISBN:</b> {{ book.isbn }}</li>
+                    <li><b>Inventory Number:</b> {{ book.inventory_number }}</li>
                     <li><b>Available:</b> {{ book.get_availability }}</li>
                 </ul>
             </div>
