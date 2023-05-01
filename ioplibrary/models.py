@@ -155,8 +155,7 @@ class Book(models.Model):
 class Borrower(models.Model):
     borrower_name = models.CharField(
         "Name",
-        max_length=200,
-        unique=True,
+        max_length=200
     )
     borrowed_date = models.DateField(
         "Date",
