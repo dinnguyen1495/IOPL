@@ -17,7 +17,8 @@
         <form id="search-form">
             {% csrf_token %}
             <div class="search-input">
-                <input id="search-bar" type="text" autofocus="autofocus" name="iopl-searchbar" size="100" maxlength="100" value="">
+                <input id="search-bar" type="text" autocomplete="off" autofocus="autofocus" name="iopl-searchbar" 
+                placeholder="Start typing to search for books..." size="100" maxlength="100" value="">
             </div>
             <div class="search-filter">
                 <b>Search by type: </b>
@@ -58,8 +59,10 @@
     <div id="book-list">
         {% for book in object_list %}
         <div class="book-container">
-            <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
-            <div class="book-information">
+            <div class="book-cover-container">
+                <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
+            </div>
+            <div class="book-information-container">
                 <ul class="book-information-list">
                     <li><b>Title:</b> {{ book.title }}</li>
                     <li><b>Authors:</b> {{ book.authors }}</li>
@@ -70,6 +73,7 @@
                     <li><b>Edition:</b> {{ book.edition }}</li>
                     <li><b>ISBN:</b> {{ book.isbn }}</li>
                     <li><b>Inventory Number:</b> {{ book.inventory_number }}</li>
+                    <li><b>Quantity:</b> {{ book.units }}</li>
                     <li><b>Available:</b> {{ book.get_availability }}</li>
                 </ul>
             </div>

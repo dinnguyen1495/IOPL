@@ -128,7 +128,7 @@ class Book(models.Model):
     display_cover.short_description = "Preview"
 
     def get_availability(self) -> int:
-        return self.units - Borrower.objects.filter(borrowed_book=self).count()
+        return max(0, self.units - Borrower.objects.filter(borrowed_book=self).count())
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.isbn = self.isbn.strip()

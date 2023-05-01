@@ -3,8 +3,10 @@ function update_book_list(data) {
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
             "<div class=\"book-container\">\n" +
-            "    <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
-            "    <div class=\"book-information\">\n" +
+            "    <div class=\"book-cover-container\">\n" +
+            "        <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
+            "    </div>\n" +
+            "    <div class=\"book-information-container\">\n" +
             "        <ul class=\"book-information-list\">\n" +
             "            <li><b>Title:</b> " + data["books"][i]["title"] + "</li>\n" +
             "            <li><b>Authors:</b> " + data["books"][i]["authors"] + "</li>\n" +
@@ -15,6 +17,7 @@ function update_book_list(data) {
             "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
             "            <li><b>ISBN:</b> " + data["books"][i]["isbn"] + "</li>\n" +
             "            <li><b>Inventory Number:</b> " + data["books"][i]["inventory_number"] + "</li>\n" +
+            "            <li><b>Quantity:</b> " + data["books"][i]["units"] + "</li>\n" +
             "            <li><b>Available:</b> " + data["books"][i]["available"] + "</li>\n" +
             "        </ul>\n" +
             "    </div>\n" +
@@ -41,6 +44,7 @@ function search_book() {
             'column': column
         },
         success: function(data) {
+            console.log(data);
             update_book_list(data);
         },
         dataType: "json"
