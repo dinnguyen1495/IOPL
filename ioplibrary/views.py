@@ -49,8 +49,8 @@ def search_book(request):
         }
 
         if column == 'all':
-            queryset = reversed(query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | query_dict["inventory number"] | \
-                       query_dict["isbn"] | query_dict["year"])
+            queryset = query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | query_dict["inventory number"] | \
+                       query_dict["isbn"] | query_dict["year"]
         else:
             queryset = query_dict[column]
 
@@ -65,6 +65,7 @@ def search_book(request):
                 "edition": book.edition,
                 "isbn": book.isbn,
                 "inventory_number": book.inventory_number,
+                "units": book.units,
                 "available": book.get_availability(),
                 "cover": book.cover.url
             }
