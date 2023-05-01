@@ -9,6 +9,7 @@ class BookListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
+        context['object_list'] = Book.objects.order_by("book_id")
         context['types'] = ["Book", "Thesis"]
         context['field_list'] = Field.objects.all()
         context['borrowers'] = reversed(Borrower.objects.all())
