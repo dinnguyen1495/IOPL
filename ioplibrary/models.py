@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
-import datetime
+from django.utils import timezone
 from os.path import exists
 
 from .validators import CommaSeparatedStringValidator, ISBNValidator, YearValidator
@@ -40,6 +40,8 @@ class TruePositiveIntegerField(models.PositiveIntegerField):
             }
         )
 
+def cover_upload(instance, filename):
+    return f"{COVERS_DIR}/{instance.isbn}.jpg"
 
 class Book(models.Model):
     class TypeOfMaterial(models.TextChoices):
@@ -82,7 +84,7 @@ class Book(models.Model):
     year = TruePositiveIntegerField(
         "Year of publication",
         validators=[YearValidator],
-        default=datetime.date.today().year,
+        default=timezone.now().year,
     )
     edition = TruePositiveIntegerField(
         "Edition",
@@ -107,7 +109,7 @@ class Book(models.Model):
     )
     cover = models.ImageField(
         "Cover's Path",
-        upload_to=f"{COVERS_DIR}",
+        upload_to=cover_upload,
         blank=True,
         null=True,
         default=f'{COVERS_DIR}/unavailable.jpg'
@@ -123,11 +125,10 @@ class Book(models.Model):
 
     def display_cover(self):
         return mark_safe(f'<img src="{self.cover.url}" width="150" />')
-    display_cover.short_description = "Cover's Preview"
-    display_cover.allow_tags = True
+    display_cover.short_description = "Preview"
 
     def get_availability(self) -> int:
-        return self.units - Holder.objects.filter(borrowed_book=self).count()
+        return self.units - Borrower.objects.filter(borrowed_book=self).count()
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.isbn = self.isbn.strip()
@@ -147,12 +148,11 @@ class Book(models.Model):
                         self.cover_url = get_cover_luh(self.title)
                 else:
                     self.cover = save_cover(self.cover_url, self.isbn)
-                print()
 
         return super(Book, self).save(force_insert, force_update, using, update_fields)
 
 
-class Holder(models.Model):
+class Borrower(models.Model):
     borrower_name = models.CharField(
         "Name",
         max_length=200,
@@ -160,7 +160,7 @@ class Holder(models.Model):
     )
     borrowed_date = models.DateField(
         "Date",
-        default=datetime.date.today(),
+        default=timezone.now()
     )
     borrowed_book = models.ForeignKey(
         "Book",

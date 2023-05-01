@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import Group
+from django.utils.html import mark_safe 
+from django.template.defaultfilters import truncatewords
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats import base_formats
 
-from .models import Book, Holder, Field
+from .models import Book, Borrower, Field
 from .resources import BookResource
 
 
@@ -12,43 +14,36 @@ class BookTable(admin.TabularInline):
     model = Book
 
 
-class HolderInLine(admin.TabularInline):
-    model = Holder
+class BorrwerInLine(admin.TabularInline):
+    model = Borrower
     extra = 0
 
     def get_max_num(self, request, obj=None, **kwargs):
         if obj is not None:
             self.max_num = obj.units
-        return super(HolderInLine, self).get_max_num(request, obj, **kwargs)
+        return super(BorrwerInLine, self).get_max_num(request, obj, **kwargs)
 
 
 class BookAdmin(ImportExportModelAdmin):
     model = Book
     search_fields = ('book_id', 'type', 'authors', 'field__field_name', 'title', 'publisher', 'year', 'edition', 'isbn',
-                     'inventory_number', 'holder__borrower_name', 'holder__borrowed_date')
-    list_display = ('title', 'authors', 'field', 'isbn', 'inventory_number', 'holders', 'date', 'display_cover')
+                     'inventory_number', 'borrower__borrower_name', 'borrower__borrowed_date')
+    list_display = ('display_cover', 'title', 'get_authors', 'field', 'isbn', 'inventory_number', 'get_borrowers', 'get_date')
+    list_display_links = ('display_cover', 'title',)
     readonly_fields = ('display_cover',)
-    inlines = (HolderInLine,)
+    inlines = (BorrwerInLine,)
+    show_close_button = True
     resource_class = BookResource
-
-    def clean_title(self):
-        title = self.clean_title['title']
-        if Book.objects.filter(title=title).exists():
-            raise forms.ValidationError("A book with the same title is already exists")
-        return title
-
-    def clean_isbn(self):
-        title = self.clean_title['isbn'].replace("-", "")
-        if Book.objects.filter(isbn=isbn).exists():
-            raise forms.ValidationError("A book with the same isbn is already exists")
-        return title
+    
+    def get_exclude(self, request, obj=None):
+        exclude = ['book_id', 'id']
+        if obj is None:
+            exclude += ["inventory_number"]
+        return tuple(set(exclude))
 
     def save_model(self, request, obj, form, change):
         def get_type(type_name):
             return 'BO' if type_name == 'Book' else 'TH'
-
-        def get_cover(isbn):
-            pass
 
         if not change:
             if Book.objects.count() == 0:
@@ -59,23 +54,33 @@ class BookAdmin(ImportExportModelAdmin):
         obj.save()
         return super(BookAdmin, self).save_model(request, obj, form, change)
 
-    def holders(self, obj):
-        result = ""
-        for holder in Holder.objects.filter(borrowed_book=obj):
-            result += f"{holder.borrower_name}\n"
-        return result
+    def get_form(self, request, obj=None, **kwargs):
+        kwargs['widgets'] = {
+            'title': forms.Textarea(attrs={'cols': 35, 'rows': 4}), 
+            'authors': forms.Textarea(attrs={'cols': 35, 'rows': 3})
+        }
+        return super().get_form(request, obj, **kwargs)
 
-    def date(self, obj):
+    def get_authors(self, obj):
         result = ""
-        for holder in Holder.objects.filter(borrowed_book=obj):
-            result += f"{holder.borrowed_date}\n"
-        return result
+        for author in obj.authors.split(", "):
+            result += f"{author},<br>"
+        return mark_safe(result[:-5])
+    get_authors.short_description = "Authors"
 
-    def get_exclude(self, request, obj=None):
-        exclude = ['book_id', 'id']
-        if obj is None:
-            exclude += ["inventory_number"]
-        return tuple(set(exclude))
+    def get_borrowers(self, obj):
+        result = ""
+        for borrower in Borrower.objects.filter(borrowed_book=obj):
+            result += f"{borrower.borrower_name}<br>"
+        return mark_safe(result[:-4])
+    get_borrowers.short_description = "Borrowers"
+
+    def get_date(self, obj):
+        result = ""
+        for borrower in Borrower.objects.filter(borrowed_book=obj):
+            result += f"{borrower.borrowed_date.strftime('%d.%m.%Y')}<br>"
+        return mark_safe(result[:-4])
+    get_date.short_description = "Borrowed Date"
 
     def get_import_formats(self):
         formats = (
@@ -96,14 +101,26 @@ class BookAdmin(ImportExportModelAdmin):
         return [f for f in formats if f().can_export()]
 
 
-class HolderAdmin(admin.ModelAdmin):
-    model = Holder
+class BorrowerAdmin(admin.ModelAdmin):
+    model = Borrower
     search_fields = ('borrower_name', 'borrowed_date', 'borrowed_book')
-    list_display = ('borrower_name', 'borrowed_date', 'borrowed_book')
+    list_display = ('borrowed_book', 'get_inventory_number', 'get_borrower_name', 'get_borrowed_date')
+    
+    def get_inventory_number(self, obj):
+        return obj.borrowed_book.inventory_number
+    get_inventory_number.short_description = "Inventory Number"
+
+    def get_borrower_name(self, obj):
+        return obj.borrower_name
+    get_borrower_name.short_description = "Borrower's Name"
+
+    def get_borrowed_date(self, obj):
+        return obj.borrowed_date.strftime('%d.%m.%Y')
+    get_borrowed_date.short_description = "Borrowed Date"
 
 
 # Register your models here.
 admin.site.unregister(Group)
 admin.site.register(Book, BookAdmin)
-admin.site.register(Holder, HolderAdmin)
+admin.site.register(Borrower, BorrowerAdmin)
 admin.site.register(Field)

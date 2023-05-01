@@ -14,6 +14,7 @@ function update_book_list(data) {
             "            <li><b>Year:</b> " + data["books"][i]["year"] + "</li>\n" +
             "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
             "            <li><b>ISBN:</b> " + data["books"][i]["isbn"] + "</li>\n" +
+            "            <li><b>Inventory Number:</b> " + data["books"][i]["inventory_number"] + "</li>\n" +
             "            <li><b>Available:</b> " + data["books"][i]["available"] + "</li>\n" +
             "        </ul>\n" +
             "    </div>\n" +
@@ -39,7 +40,7 @@ function search_book() {
             'field': field,
             'column': column
         },
-        success: function (data) {
+        success: function(data) {
             update_book_list(data);
         },
         dataType: "json"

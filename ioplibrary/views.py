@@ -1,5 +1,5 @@
 from django.views.generic import ListView, UpdateView
-from .models import Book, Field, Holder
+from .models import Book, Field, Borrower
 from django.http import JsonResponse
 
 
@@ -11,8 +11,8 @@ class BookListView(ListView):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
         context['types'] = ["Book", "Thesis"]
         context['field_list'] = Field.objects.all()
-        context['holders'] = reversed(Holder.objects.all())
-        context['book_columns'] = ["Title", "Publisher", "Year", "Edition", "ISBN", "Inventory Number"]
+        context['borrowers'] = reversed(Borrower.objects.all())
+        context['book_columns'] = ["Inventory Number", "Title", "Publisher", "ISBN", "Year"]
         return context
 
 
@@ -28,34 +28,31 @@ def search_book(request):
 
         queryset = None
         if book_type != 'All':
-            queryset = Book.objects.filter(type=book_type)
+            queryset = Book.objects.filter(type=book_type).order_by("-book_id")
         else:
-            queryset = Book.objects.all()
+            queryset = Book.objects.all().order_by("-book_id")
 
         if query == "":
             if field != 'All':
-                queryset = Book.objects.filter(field__field_name=field)
+                queryset = Book.objects.filter(field__field_name=field).order_by("-book_id")
 
-        if query != "":
-            if field != 'All':
-                queryset = Book.objects.filter(field__field_name=field)
+        if field != 'All':
+            queryset = Book.objects.filter(field__field_name=field).order_by("-book_id")
 
-            query_dict = {
-                "inventory_number": queryset.filter(inventory_number__contains=query),
-                "title": queryset.filter(title__contains=query),
-                "authors": queryset.filter(authors__contains=query),
-                "publisher": queryset.filter(publisher__contains=query),
-                "year": queryset.filter(year__contains=query),
-                "edition": queryset.filter(edition__contains=query),
-                "isbn": queryset.filter(isbn__contains=query),
-                "type": queryset.filter(type__contains=query),
-            }
+        query_dict = {
+            "inventory number": queryset.filter(inventory_number__startswith=query),
+            "title": queryset.filter(title__contains=query),
+            "authors": queryset.filter(authors__contains=query),
+            "publisher": queryset.filter(publisher__contains=query),
+            "isbn": queryset.filter(isbn__startswith=query),
+            "year": queryset.filter(year__startswith=query),
+        }
 
-            if column == 'all':
-                queryset = query_dict["inventory_number"] | query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | \
-                           query_dict["year"] | query_dict["edition"] | query_dict["type"] | query_dict["isbn"]
-            else:
-                queryset = query_dict[column]
+        if column == 'all':
+            queryset = reversed(query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | query_dict["inventory number"] | \
+                       query_dict["isbn"] | query_dict["year"])
+        else:
+            queryset = query_dict[column]
 
         for book in queryset:
             book_info = {
@@ -67,6 +64,7 @@ def search_book(request):
                 "year": book.year,
                 "edition": book.edition,
                 "isbn": book.isbn,
+                "inventory_number": book.inventory_number,
                 "available": book.get_availability(),
                 "cover": book.cover.url
             }
