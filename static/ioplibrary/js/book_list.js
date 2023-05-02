@@ -77,6 +77,14 @@ $('input[name=column]').on('input',function(e) {
     $('#search-bar').focus();
 });
 
-$(window).click(function() {
+$("#welcome-text").click(function() {
+    $('#search-bar').focus();
+});
+
+$("#search-container").click(function() {
+    $('#search-bar').focus();
+});
+
+$("#search-result-notify").click(function() {
     $('#search-bar').focus();
 });
