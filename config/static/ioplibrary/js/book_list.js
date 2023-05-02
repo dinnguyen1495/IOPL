@@ -1,6 +1,5 @@
 function update_book_list(data) {
-    $("#search-result-notify").html("<p id=\"search-result-text\">Found <b><u>" + data["result_number"] + " books</u></b> in the library</p>")
-
+    let filtered_list = "";
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
             "<div class=\"book-container\">\n" +
@@ -45,6 +44,7 @@ function search_book() {
             'column': column
         },
         success: function(data) {
+            console.log(data);
             update_book_list(data);
         },
         dataType: "json"

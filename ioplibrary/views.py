@@ -10,6 +10,7 @@ class BookListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
         context['object_list'] = Book.objects.order_by("book_id")
+        context['result_number'] = context['object_list'].count()
         context['types'] = ["Book", "Thesis"]
         context['field_list'] = Field.objects.all()
         context['borrowers'] = reversed(Borrower.objects.all())
@@ -72,5 +73,5 @@ def search_book(request):
             }
             filtered_books.append(book_info)
 
-        return JsonResponse({'books': filtered_books})
+        return JsonResponse({"books": filtered_books, "result_number": len(filtered_books)})
     return JsonResponse({'error': 'Something is wrong!'})

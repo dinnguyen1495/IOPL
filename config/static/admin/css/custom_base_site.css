@@ -1,0 +1,29 @@
+.field-inventory_number {
+    white-space: nowrap;
+}
+
+.aligned p.file-upload {
+    margin-left: 0;
+}
+
+.cover-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#preview-cover-btn {
+    margin-top: 20px;
+}
+
+td.field-title {
+    width: 450px;
+}
+
+.field-get_authors {
+    width: 200px;
+}
+
+th, 
+td {
+    line-height: 1.5;
+}
