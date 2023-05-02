@@ -76,3 +76,7 @@ $('input[name=column]').on('input',function(e) {
     search_book();
     $('#search-bar').focus();
 });
+
+$(window).click(function() {
+    $('#search-bar').focus();
+});

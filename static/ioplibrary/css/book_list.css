@@ -49,6 +49,11 @@ body {
     background-color: #19A7CE;
 }
 
+.search-input-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
 #search-bar {
     width: 100%;
     padding: 12px;
