@@ -13,7 +13,7 @@ function update_book_list(data) {
             "            <li><b>Title:</b> " + data["books"][i]["title"] + "</li>\n" +
             "            <li><b>Authors:</b> " + data["books"][i]["authors"] + "</li>\n" +
             "            <li><b>Publisher:</b> " + data["books"][i]["publisher"] + "</li>\n" +
-            "            <li><b>Book:</b> " + data["books"][i]["type"] + "</li>\n" +
+            "            <li><b>Type:</b> " + data["books"][i]["type"] + "</li>\n" +
             "            <li><b>Field:</b> " + data["books"][i]["field"] + "</li>\n" +
             "            <li><b>Year:</b> " + data["books"][i]["year"] + "</li>\n" +
             "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
