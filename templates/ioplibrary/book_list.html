@@ -26,33 +26,39 @@
             <div class="search-filter">
                 <b>Search by type: </b>
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="book_type" value="All" checked="checked"> All
+                    <input class="search-option" id="book_type_all" type="radio" name="book_type" value="All" checked="checked">
+                    <label for="book_type_all">All</label>
                 </span>
                 {% for type in types %}
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="book_type" value="{{ type }}"> {{ type }}
+                    <input class="search-option" id="book_type_{{ type }}" type="radio" name="book_type" value="{{ type }}"> 
+                    <label for="book_type_{{ type }}">{{ type }}</label>
                 </span>
                 {% endfor %}
             </div>
             <div class="search-filter">
                 <b>Search in fields: </b>
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="field" value="All" checked="checked"> All
+                    <input class="search-option" id="field_all" type="radio" name="field" value="All" checked="checked">
+                    <label for="field_all">All</label>
                 </span>
                 {% for field in field_list %}
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="field" value="{{ field.field_name }}"> {{ field.field_name }}
+                    <input class="search-option" id="field_{{ field.field_name }}" type="radio" name="field" value="{{ field.field_name }}"> 
+                    <label for="field_{{ field.field_name }}">{{ field.field_name }}</label>
                 </span>
                 {% endfor %}
             </div>
             <div class="search-filter">
                 <b>Search in information: </b>
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="column" value="All" checked="checked"> All
+                    <input class="search-option" id="column_all" type="radio" name="column" value="All" checked="checked">
+                    <label for="column_all">All</label>
                 </span>
                 {% for column in book_columns %}
                 <span class="search-choice">
-                    <input class="search-option" type="radio" name="column" value="{{ column }}"> {{ column }}
+                    <input class="search-option" id="column_{{ column }}" type="radio" name="column" value="{{ column }}"> 
+                    <label for="column_{{ column }}">{{ column }}</label>
                 </span>
                 {% endfor %}
             </div>
