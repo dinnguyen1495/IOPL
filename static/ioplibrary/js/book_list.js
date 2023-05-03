@@ -1,5 +1,7 @@
 function update_book_list(data) {
-    $("#search-result-notify").html("<p id=\"search-result-text\">Found <b><u>" + data["result_number"] + " books</u></b> in the library</p>");
+    $("#search-result-notify").html(
+        "<p id=\"search-result-text\">Found <b><u>" + data["result_number"] + " books</u></b> in the library</p>"
+    );
 
     let filtered_list = ""
     for (let i = 0; i < data["books"].length; i++) {
@@ -81,10 +83,6 @@ $("#welcome-text").click(function() {
     $('#search-bar').focus();
 });
 
-$("#search-container").click(function() {
-    $('#search-bar').focus();
-});
-
-$("#search-result-notify").click(function() {
+$(document).keypress(function(event) {
     $('#search-bar').focus();
 });
