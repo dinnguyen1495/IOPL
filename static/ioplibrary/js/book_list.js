@@ -88,7 +88,7 @@ function scroll_to_top() {
 }
 
 $(window).scroll(function() {
-    if ($(window).scrollTop() > 300) {
+    if ($(window).scrollTop() > 400) {
         $(".back-to-top-btn").fadeIn(800);
     } else {
         $(".back-to-top-btn").fadeOut(800);
