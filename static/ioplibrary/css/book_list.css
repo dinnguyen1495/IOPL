@@ -18,9 +18,18 @@ body {
     text-align: center;
 }
 
-#welcome-text h1 a:link {
+#welcome-text h1 a {
     text-decoration: none;
     color: #146C94;
+}
+
+#welcome-text h1 a:hover {
+    color: #210062;
+}
+
+input[type=radio] {
+    width: 16px;
+    height: 16px;
 }
 
 #search-form {
@@ -149,4 +158,28 @@ footer {
     max-height: 10vh;
     text-align: center;
     border-top: 1px solid #19A7CE;
+}
+
+.up-arrow-icon {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    padding: 2px;
+    width: 40px;
+}
+
+.back-to-top-btn {
+    display: block;
+    background-color: #19A7CE;
+    border: none;
+    border-radius: 40px;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    width: 64px;
+    z-index: 999;
+}
+
+.back-to-top:hover{
+    cursor: pointer;
 }
