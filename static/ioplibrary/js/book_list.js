@@ -58,31 +58,39 @@ function search_book() {
 $('#search-form').submit(function(e) {
     e.preventDefault();
     return false;
-});
+})
 
 $('#search-bar').on('input',function(e) {
     search_book();
-});
+})
 
 $('input[name=book_type]').on('input',function(e) {
     search_book();
     $('#search-bar').focus();
-});
+})
 
 $('input[name=field]').on('input',function(e) {
     search_book();
     $('#search-bar').focus();
-});
+})
 
 $('input[name=column]').on('input',function(e) {
     search_book();
     $('#search-bar').focus();
-});
-
-$("#welcome-text").click(function() {
-    $('#search-bar').focus();
-});
+})
 
 $(document).keypress(function(event) {
     $('#search-bar').focus();
-});
+})
+
+function scroll_to_top() {
+    window.scrollTo(0, 0);
+}
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() > 400) {
+        $(".back-to-top-btn").fadeIn(800);
+    } else {
+        $(".back-to-top-btn").fadeOut(800);
+    }
+})

@@ -30,16 +30,16 @@ def search_book(request):
 
         queryset = None
         if book_type != 'All':
-            queryset = Book.objects.filter(type=book_type).order_by("-book_id")
+            queryset = Book.objects.filter(type=book_type).order_by("book_id")
         else:
             queryset = Book.objects.all()
 
         if query == "":
             if field != 'All':
-                queryset = Book.objects.filter(field__field_name=field).order_by("-book_id")
+                queryset = Book.objects.filter(field__field_name=field).order_by("book_id")
 
         if field != 'All':
-            queryset = Book.objects.filter(field__field_name=field).order_by("-book_id")
+            queryset = Book.objects.filter(field__field_name=field).order_by("book_id")
 
         query_dict = {
             "inventory number": queryset.filter(inventory_number__startswith=query),
