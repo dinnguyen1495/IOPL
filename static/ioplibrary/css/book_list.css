@@ -108,7 +108,7 @@ input[type=radio] {
     gap: 0 24px;
     padding: 20px;
     margin: 20px 0;
-    border: 1.6px solid #394867;
+    border: 1.6px solid #210062;
     border-radius: 1rem;
     font-size: 16px;
 }
@@ -160,18 +160,18 @@ footer {
 
 .back-to-top-btn i {
     color: white;
-    font-size: 40px;
+    font-size: 56px;
 }
 
 .back-to-top-btn {
     display: none;
     background-color: #19A7CE;
     border: none;
-    border-radius: 40px;
+    border-radius: 80px;
     position: fixed;
     right: 64px;
     bottom: 64px;
-    width: 64px;
+    width: 80px;
     z-index: 999;
 }
 

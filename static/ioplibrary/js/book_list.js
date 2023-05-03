@@ -79,10 +79,6 @@ $('input[name=column]').on('input',function(e) {
     $('#search-bar').focus();
 })
 
-$("#welcome-text").click(function() {
-    $('#search-bar').focus();
-})
-
 $(document).keypress(function(event) {
     $('#search-bar').focus();
 })
