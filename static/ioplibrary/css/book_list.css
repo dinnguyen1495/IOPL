@@ -160,7 +160,7 @@ footer {
 
 .back-to-top-btn i {
     color: white;
-    font-size: 56px;
+    font-size: 48px;
 }
 
 .back-to-top-btn {
@@ -171,7 +171,7 @@ footer {
     position: fixed;
     right: 64px;
     bottom: 64px;
-    width: 80px;
+    width: 76px;
     z-index: 999;
 }
 
