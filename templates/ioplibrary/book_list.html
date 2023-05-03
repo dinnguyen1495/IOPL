@@ -18,9 +18,7 @@
             {% csrf_token %}
             <div class="search-input">
                 <span class="search-input-icon" id="basic-addon1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                    </svg>
+                    <i class="bi bi-search fa-lg"></i>
                 </span>
                 <input id="search-bar" type="text" autocomplete="off" autofocus="autofocus" name="iopl-searchbar" 
                 placeholder="Start typing to search for books..." size="100" maxlength="100" value="">
@@ -89,8 +87,8 @@
         </div>
         {% endfor %}
     </div>
-    <button class="back-to-top-btn" onclick="scrollToTop()">
-        <i class="bi bi-arrow-up up-arrow-icon" aria-hidden="true"></i>
+    <button class="back-to-top-btn" onclick="scroll_to_top()" title="Back to Top">
+        <i class="bi bi-arrow-up"></i>
     </button>
 {% endblock content %}
 

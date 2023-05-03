@@ -47,9 +47,8 @@ input[type=radio] {
 
 .search-input-icon {
     width: 5%;
-    padding: 12px;
+    padding: 7px;
     line-height: 1.6;
-    font-size: 18px;
     color: #ffffff;
     border-top: 2px solid #19A7CE;
     border-left: 2px solid #19A7CE;
@@ -58,9 +57,8 @@ input[type=radio] {
     background-color: #19A7CE;
 }
 
-.search-input-icon svg {
-    width: 24px;
-    height: 24px;
+.search-input-icon i {
+    font-size: 24px;
 }
 
 #search-bar {
@@ -160,22 +158,19 @@ footer {
     border-top: 1px solid #19A7CE;
 }
 
-.up-arrow-icon {
+.back-to-top-btn i {
     color: white;
     font-size: 40px;
-    font-weight: bold;
-    padding: 2px;
-    width: 40px;
 }
 
 .back-to-top-btn {
-    display: block;
+    display: none;
     background-color: #19A7CE;
     border: none;
     border-radius: 40px;
     position: fixed;
-    right: 40px;
-    bottom: 40px;
+    right: 64px;
+    bottom: 64px;
     width: 64px;
     z-index: 999;
 }
