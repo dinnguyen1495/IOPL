@@ -7,18 +7,6 @@ from googleapiclient.errors import HttpError
 from .constants import *
 
 
-# def compare_content(string1: str, string2: str) -> str:
-#     list_1 = set(word.lower() for word in re.findall(r'\b\w+\b', string1)) - EXCLUSION_SET
-#     list_2 = set(word.lower() for word in re.findall(r'\b\w+\b', string2)) - EXCLUSION_SET
-#     print(list_1)
-#     print(list_2)
-
-#     for instance in SKIP_SET:
-#         if instance in list_1:
-#             return False
-#     return list_2.issubset(list_1)
-
-
 def get_cover_gg(title: str, authors: str) -> str:
     gg_service = build("customsearch", "v1", developerKey=GG_CUSTOM_SEARCH_API)
     
