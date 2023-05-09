@@ -22,6 +22,8 @@ input[type=radio] {
 
 #search-bar {
   border: 2px solid rgb(var(--clr-light));
+  outline: none;
+  box-shadow: none;
 }
 
 .search-filter {
@@ -62,8 +64,8 @@ input[type=radio] {
 }
 
 .book-cover {
-  width: 220px;
-  height: 300px;
+  width: 150px;
+  height: 200px;
   border-radius: 0.3rem;
 }
 
@@ -72,7 +74,7 @@ ul {
 }
 
 li {
-  padding: 8px;
+  padding: 2px;
 }
 
 footer {
@@ -108,10 +110,21 @@ footer {
   .book-cover-container {
     display: none;
     padding: 0;
+    margin: 0;
   }
 
   .book-information-list {
+    margin: 0;
     display: grid;
+    column-gap: 0;
+    grid-template-columns: none;
+    text-align: left;
+  }
+
+  .book-status-list {
+    margin: 0;
+    display: grid;
+    column-gap: 0;
     grid-template-columns: none;
   }
 }
@@ -123,12 +136,20 @@ footer {
   }
 
   .book-information-container {
-    flex: 3 3 0;
+    flex: 5 5 0;
   }
 
   .book-information-list {
+    margin: 0;
     display: grid;
     column-gap: 5%;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .book-status-list {
+    margin: 0;
+    display: grid;
+    column-gap: 5%;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
