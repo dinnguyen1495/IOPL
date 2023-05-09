@@ -25,6 +25,7 @@ def get_cover_gg(title: str, authors: str) -> str:
             if result["image"]["width"] < result["image"]["height"]:
                 return result["link"]
     except (KeyError, HttpError):
+        print("ERROR!")
         return ""
     return ""
 

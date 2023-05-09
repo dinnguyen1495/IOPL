@@ -137,7 +137,7 @@ class Book(models.Model):
         self.publisher = self.publisher.strip()
         self.inventory_number = self.inventory_number.strip()
 
-        if self.cover == f"{COVERS_DIR}/unavailable.jpg":
+        if self.cover == f"{COVERS_DIR}/unavailable.jpg" or self.cover == "":
             if os.path.exists(f"./media/{COVERS_DIR}/{self.isbn}.jpg"):
                 self.cover = f"{COVERS_DIR}/{self.isbn}.jpg"
             else: 
@@ -146,8 +146,7 @@ class Book(models.Model):
                         self.cover_url = get_cover_gg(self.title, self.authors)
                     else:
                         self.cover_url = get_cover_luh(self.title)
-                else:
-                    self.cover = save_cover(self.cover_url, self.isbn)
+                self.cover = save_cover(self.cover_url, self.isbn)
 
         return super(Book, self).save(force_insert, force_update, using, update_fields)
 
