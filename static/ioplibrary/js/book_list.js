@@ -6,7 +6,7 @@ function update_book_list(data) {
     let filtered_list = ""
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
-            "<div class=\"book-container\">\n" +
+            "<div class=\"book-container d-flex flex-row align-items-center justify-content-center my-2 p-4\">\n" +
             "    <div class=\"book-cover-container\">\n" +
             "        <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
             "    </div>\n" +
