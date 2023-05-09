@@ -87,16 +87,15 @@ footer {
 
 .back-to-top-btn i {
   color: white;
-  font-size: 48px;
 }
 
 .back-to-top-btn {
   display: none;
   background-color: rgb(var(--clr-light));
   position: fixed;
-  right: 64px;
-  bottom: 64px;
-  width: 76px;
+  right: 4%;
+  bottom: 4%;
+  width: 8vh;
   z-index: 999;
   text-align: center;
 }
