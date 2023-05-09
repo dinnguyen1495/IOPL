@@ -76,12 +76,12 @@
 
     <div id="book-list" class="d-flex flex-column flex-gap fs-6 p-6">
         {% for book in object_list %}
-        <div class="book-container d-flex flex-row align-items-center justify-content-center my-2 p-4">
+        <div class="book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3">
             <div class="book-cover-container">
                 <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
             </div>
-            <div class="book-information-container">
-                <ul class="book-information-list d-grid">
+            <div class="book-information-container w-100 d-flex flex-column align-items-center justify-content-center">
+                <ul class="book-information-list d-grid w-100">
                     <li><b>Title:</b> {{ book.title }}</li>
                     <li><b>Authors:</b> {{ book.authors }}</li>
                     <li><b>Publisher:</b> {{ book.publisher }}</li>
@@ -91,7 +91,10 @@
                     <li><b>Edition:</b> {{ book.edition }}</li>
                     <li><b>ISBN:</b> {{ book.isbn }}</li>
                     <li><b>Inventory Number:</b> {{ book.inventory_number }}</li>
+                </ul>
+                <ul class="book-status-list d-grid w-100">
                     <li><b>Quantity:</b> {{ book.units }}</li>
+                    <li><b>Borrowed:</b> {{ book.get_borrowed }}</li>
                     <li><b>Available:</b> {{ book.get_availability }}</li>
                 </ul>
             </div>

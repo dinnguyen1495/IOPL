@@ -6,12 +6,12 @@ function update_book_list(data) {
     let filtered_list = ""
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
-            "<div class=\"book-container d-flex flex-row align-items-center justify-content-center my-2 p-4\">\n" +
+            "<div class=\"book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3\">\n" +
             "    <div class=\"book-cover-container\">\n" +
             "        <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
             "    </div>\n" +
-            "    <div class=\"book-information-container\">\n" +
-            "        <ul class=\"book-information-list\">\n" +
+            "    <div class=\"book-information-container w-100 d-flex flex-column align-items-center justify-content-center\">\n" +
+            "        <ul class=\"book-information-list d-grid w-100\">\n" +
             "            <li><b>Title:</b> " + data["books"][i]["title"] + "</li>\n" +
             "            <li><b>Authors:</b> " + data["books"][i]["authors"] + "</li>\n" +
             "            <li><b>Publisher:</b> " + data["books"][i]["publisher"] + "</li>\n" +
@@ -21,7 +21,10 @@ function update_book_list(data) {
             "            <li><b>Edition:</b> " + data["books"][i]["edition"] + "</li>\n" +
             "            <li><b>ISBN:</b> " + data["books"][i]["isbn"] + "</li>\n" +
             "            <li><b>Inventory Number:</b> " + data["books"][i]["inventory_number"] + "</li>\n" +
+            "        </ul>\n" +
+            "        <ul class=\"book-status-list d-grid w-100\">\n" +
             "            <li><b>Quantity:</b> " + data["books"][i]["units"] + "</li>\n" +
+            "            <li><b>Borrowed:</b> " + data["books"][i]["borrowed"] + "</li>\n" +
             "            <li><b>Available:</b> " + data["books"][i]["available"] + "</li>\n" +
             "        </ul>\n" +
             "    </div>\n" +

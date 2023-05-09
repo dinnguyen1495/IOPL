@@ -68,6 +68,7 @@ def search_book(request):
                 "isbn": book.isbn,
                 "inventory_number": book.inventory_number,
                 "units": book.units,
+                "borrowed": book.get_borrowed(),
                 "available": book.get_availability(),
                 "cover": book.cover.url
             }

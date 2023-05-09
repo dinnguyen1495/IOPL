@@ -127,8 +127,11 @@ class Book(models.Model):
         return mark_safe(f'<img src="{self.cover.url}" width="150" />')
     display_cover.short_description = "Preview"
 
-    def get_availability(self) -> int:
+    def get_availability(self):
         return max(0, self.units - Borrower.objects.filter(borrowed_book=self).count())
+
+    def get_borrowed(self):
+        return Borrower.objects.filter(borrowed_book=self).count()
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.isbn = self.isbn.strip()
