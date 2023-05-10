@@ -8,102 +8,102 @@
 {% block title %} IOP's Library {% endblock title %}
 
 {% block content %}
-    <div id="welcome-text">
-        <h1 class="h1 text-center"><a class="text-med-dark text-decoration-none" href="{% url 'book_list' %}">Welcome to IOP's Library</a></h1>
-        <br>
-        <p class="h5 text-center">Search for books and check availability for borrowing books from IOP's Library</p>
-    </div>
-    <div id="search-container">
-        <form id="search-form">
-            {% csrf_token %}
-            <div class="input-group d-flex justify-content-center align-items-center px-4 p-4">
-                <div class="input-group-prepend">
-                    <span class="input-group-text search-input-icon border-end-0 rounded-start-4 rounded-end-0 text-center">
-                        <i class="bi bi-search fs-5"></i>
-                    </span>
-                </div>
-                <input id="search-bar" class="form-control border-start-0 rounded-start-0 rounded-end-4 fs-5" type="text" autocomplete="off" 
-                autofocus="autofocus" name="iopl-searchbar" placeholder="Start typing to search..." size="100" 
-                maxlength="100" value="">
-            </div>
-            <div id="search-filters">
-                <div class="search-filter fs-6">
-                    <b>Search by type: </b>
-                    <span class="search-choice">
-                        <input class="search-option" id="book_type_all" type="radio" name="book_type" value="All" checked="checked">
-                        <label for="book_type_all">All</label>
-                    </span>
-                    {% for type in types %}
-                    <span class="search-choice">
-                        <input class="search-option" id="book_type_{{ type }}" type="radio" name="book_type" value="{{ type }}"> 
-                        <label for="book_type_{{ type }}">{{ type }}</label>
-                    </span>
-                    {% endfor %}
-                </div>
-                <div class="search-filter fs-6">
-                    <b>Search in fields: </b>
-                    <span class="search-choice">
-                        <input class="search-option" id="field_all" type="radio" name="field" value="All" checked="checked">
-                        <label for="field_all">All</label>
-                    </span>
-                    {% for field in field_list %}
-                    <span class="search-choice">
-                        <input class="search-option" id="field_{{ field.field_name }}" type="radio" name="field" value="{{ field.field_name }}"> 
-                        <label for="field_{{ field.field_name }}">{{ field.field_name }}</label>
-                    </span>
-                    {% endfor %}
-                </div>
-                <div class="search-filter fs-6">
-                    <b>Search in information: </b>
-                    <span class="search-choice">
-                        <input class="search-option" id="column_all" type="radio" name="column" value="All" checked="checked">
-                        <label for="column_all">All</label>
-                    </span>
-                    {% for column in book_columns %}
-                    <span class="search-choice">
-                        <input class="search-option" id="column_{{ column }}" type="radio" name="column" value="{{ column }}"> 
-                        <label for="column_{{ column }}">{{ column }}</label>
-                    </span>
-                    {% endfor %}
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div id="search-result-notify" class="d-flex fs-6 my-2">
-        <p id="search-result-text" class="text-med-dark">Found <b><u>{{ result_number }} books</u></b> in the library</p>
-    </div>
-
-    <div id="book-list" class="d-flex flex-column flex-gap fs-6 p-6">
-        {% for book in object_list %}
-        <div id="book-item-{{ book.book_id }}" class="book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3">
-            <div class="book-cover-container">
-                <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
-            </div>
-            <div class="book-information-container w-100 d-flex flex-column align-items-center justify-content-center">
-                <ul class="book-information-list d-grid w-100">
-                    <li><b>Title:</b> {{ book.title }}</li>
-                    <li><b>Authors:</b> {{ book.authors }}</li>
-                    <li><b>Publisher:</b> {{ book.publisher }}</li>
-                    <li><b>Type:</b> {{ book.type }}</li>
-                    <li><b>Field:</b> {{ book.field }}</li>
-                    <li><b>Year:</b> {{ book.year }}</li>
-                    <li><b>Edition:</b> {{ book.edition }}</li>
-                    <li><b>ISBN:</b> {{ book.isbn }}</li>
-                    <li><b>Inventory Number:</b> {{ book.inventory_number }}</li>
-                </ul>
-                <ul class="book-status-list d-grid w-100">
-                    <li><b>Quantity:</b> {{ book.units }}</li>
-                    <li><b>Borrowed:</b> {{ book.get_borrowed }}</li>
-                    <li><b>Available:</b> {{ book.get_availability }}</li>
-                </ul>
-            </div>
+  <div id="welcome-text">
+    <h1 class="h1 text-center"><a class="text-med-dark text-decoration-none" href="{% url 'book_list' %}">Welcome to IOP's Library</a></h1>
+    <br>
+    <p class="h5 text-center">Search for books and check availability for borrowing books from IOP's Library</p>
+  </div>
+  <div id="search-container">
+    <form id="search-form">
+      {% csrf_token %}
+      <div class="input-group d-flex justify-content-center align-items-center px-4 p-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text search-input-icon border-end-0 rounded-start-4 rounded-end-0 text-center">
+            <i class="bi bi-search fs-5"></i>
+          </span>
         </div>
-        {% endfor %}
+        <input id="search-bar" class="form-control border-start-0 rounded-start-0 rounded-end-4 fs-5" type="text" autocomplete="off" 
+        autofocus="autofocus" name="iopl-searchbar" placeholder="Start typing to search..." size="100" 
+        maxlength="100" value="">
+      </div>
+      <div id="search-filters">
+        <div class="search-filter fs-6">
+          <b>Search by type: </b>
+          <span class="search-choice">
+            <input class="search-option" id="book_type_all" type="radio" name="book_type" value="All" checked="checked">
+            <label for="book_type_all">All</label>
+          </span>
+          {% for type in types %}
+          <span class="search-choice">
+            <input class="search-option" id="book_type_{{ type }}" type="radio" name="book_type" value="{{ type }}"> 
+            <label for="book_type_{{ type }}">{{ type }}</label>
+          </span>
+          {% endfor %}
+        </div>
+        <div class="search-filter fs-6">
+          <b>Search in fields: </b>
+          <span class="search-choice">
+            <input class="search-option" id="field_all" type="radio" name="field" value="All" checked="checked">
+            <label for="field_all">All</label>
+          </span>
+          {% for field in field_list %}
+          <span class="search-choice">
+            <input class="search-option" id="field_{{ field.field_name }}" type="radio" name="field" value="{{ field.field_name }}"> 
+            <label for="field_{{ field.field_name }}">{{ field.field_name }}</label>
+          </span>
+          {% endfor %}
+        </div>
+        <div class="search-filter fs-6">
+          <b>Search in information: </b>
+          <span class="search-choice">
+            <input class="search-option" id="column_all" type="radio" name="column" value="All" checked="checked">
+            <label for="column_all">All</label>
+          </span>
+          {% for column in book_columns %}
+          <span class="search-choice">
+            <input class="search-option" id="column_{{ column }}" type="radio" name="column" value="{{ column }}"> 
+            <label for="column_{{ column }}">{{ column }}</label>
+          </span>
+          {% endfor %}
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="search-result-notify" class="d-flex fs-6 my-2">
+    <p id="search-result-text" class="text-med-dark">Found <b><u>{{ result_number }} books</u></b> in the library</p>
+  </div>
+
+  <div id="book-list" class="d-flex flex-column flex-gap fs-6 p-6">
+    {% for book in object_list %}
+    <div id="book-item-{{ book.book_id }}" class="book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3">
+      <div class="book-cover-container">
+        <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
+      </div>
+      <div class="book-information-container w-100 d-flex flex-column align-items-center justify-content-center">
+        <ul class="book-information-list d-grid w-100">
+          <li><b>Title:</b> {{ book.title }}</li>
+          <li><b>Authors:</b> {{ book.authors }}</li>
+          <li><b>Publisher:</b> {{ book.publisher }}</li>
+          <li><b>Type:</b> {{ book.type }}</li>
+          <li><b>Field:</b> {{ book.field }}</li>
+          <li><b>Year:</b> {{ book.year }}</li>
+          <li><b>Edition:</b> {{ book.edition }}</li>
+          <li><b>ISBN:</b> {{ book.isbn }}</li>
+          <li><b>Inventory Number:</b> {{ book.inventory_number }}</li>
+        </ul>
+        <ul class="book-status-list d-grid w-100">
+          <li><b>Quantity:</b> {{ book.units }}</li>
+          <li><b>Borrowed:</b> {{ book.get_borrowed }}</li>
+          <li><b>Available:</b> {{ book.get_availability }}</li>
+        </ul>
+      </div>
     </div>
-    <button class="back-to-top-btn border-0 rounded-5" onclick="scroll_to_top()" title="Back to Top">
-        <i class="bi bi-arrow-up fs-1"></i>
-    </button>
+    {% endfor %}
+  </div>
+  <button class="back-to-top-btn border-0 rounded-5" onclick="scroll_to_top()" title="Back to Top">
+    <i class="bi bi-arrow-up fs-1"></i>
+  </button>
 {% endblock content %}
 
 {% block custom_js %}
