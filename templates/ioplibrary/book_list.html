@@ -76,7 +76,7 @@
 
     <div id="book-list" class="d-flex flex-column flex-gap fs-6 p-6">
         {% for book in object_list %}
-        <div class="book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3">
+        <div id="book-item-{{ book.book_id }}" class="book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3">
             <div class="book-cover-container">
                 <img class="book-cover" src="/media/{{ book.cover }}" alt="" />
             </div>

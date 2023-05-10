@@ -1,0 +1,5 @@
+{
+    "files.autoSave": "onFocusChange",
+    "python.defaultInterpreterPath": "/home/minh/Workspace/IOPL/iop-venv/bin/python",
+    "python.analysis.extraPaths": ["/home/minh/Workspace/IOPL/iop-venv/"]
+}

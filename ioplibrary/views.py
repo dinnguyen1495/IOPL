@@ -58,6 +58,7 @@ def search_book(request):
 
         for book in queryset:
             book_info = {
+                "book_id": book.book_id,
                 "title": book.title,
                 "authors": book.authors,
                 "publisher": book.publisher,
