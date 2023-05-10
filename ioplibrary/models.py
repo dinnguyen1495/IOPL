@@ -40,8 +40,10 @@ class TruePositiveIntegerField(models.PositiveIntegerField):
             }
         )
 
+
 def cover_upload(instance, filename):
     return f"{COVERS_DIR}/{instance.isbn}.jpg"
+
 
 class Book(models.Model):
     class TypeOfMaterial(models.TextChoices):
@@ -49,10 +51,7 @@ class Book(models.Model):
         THESIS = "Thesis", _("Thesis")
 
     book_id = models.PositiveIntegerField(
-        "ID",
-        primary_key=True,
-        unique=True,
-        default=0
+        "ID", primary_key=True, unique=True, default=0
     )
     type = models.CharField(
         "Type",
@@ -112,19 +111,16 @@ class Book(models.Model):
         upload_to=cover_upload,
         blank=True,
         null=True,
-        default=f'{COVERS_DIR}/unavailable.jpg'
+        default=f"{COVERS_DIR}/unavailable.jpg",
     )
-    cover_url = models.CharField(
-        max_length=2000,
-        default="",
-        editable=False
-    )
+    cover_url = models.CharField(max_length=2000, default="", editable=False)
 
     def __str__(self):
         return self.title
 
     def display_cover(self):
         return mark_safe(f'<img src="{self.cover.url}" width="150" />')
+
     display_cover.short_description = "Preview"
 
     def get_availability(self):
@@ -133,7 +129,9 @@ class Book(models.Model):
     def get_borrowed(self):
         return Borrower.objects.filter(borrowed_book=self).count()
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
         self.isbn = self.isbn.strip()
         self.title = self.title.strip()
         self.authors = self.authors.strip()
@@ -143,7 +141,7 @@ class Book(models.Model):
         if self.cover == f"{COVERS_DIR}/unavailable.jpg" or self.cover == "":
             if os.path.exists(f"./media/{COVERS_DIR}/{self.isbn}.jpg"):
                 self.cover = f"{COVERS_DIR}/{self.isbn}.jpg"
-            else: 
+            else:
                 if self.cover_url == "":
                     if self.publisher != "LUH":
                         self.cover_url = get_cover_gg(self.title, self.authors)
@@ -159,14 +157,8 @@ class Book(models.Model):
 
 
 class Borrower(models.Model):
-    borrower_name = models.CharField(
-        "Name",
-        max_length=200
-    )
-    borrowed_date = models.DateField(
-        "Date",
-        default=timezone.now()
-    )
+    borrower_name = models.CharField("Name", max_length=200)
+    borrowed_date = models.DateField("Date", default=timezone.now)
     borrowed_book = models.ForeignKey(
         "Book",
         on_delete=models.CASCADE,
