@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap");
 
 /* ------------------------------------- */
 /* Custom properties                     */
@@ -10,11 +9,6 @@
   --clr-light: 25, 167, 206;
   --clr-med-dark: 20, 108, 148;
   --clr-white: 255, 255, 255;
-
-  /* font-families */
-  --ff-serif: "Bellefair", serif;
-  --ff-sans-cond: "Barlow Condensed", sans-serif;
-  --ff-sans-normal: "Balow", sans-serif;
 }
 
 /* ------------------------------------- */
@@ -62,7 +56,7 @@ footer {
 }
 
 /* make images easier to work with */
-img, 
+img,
 picture {
   max-width: 100%;
   display: block;
@@ -90,18 +84,29 @@ select {
   flex-grow: 1;
 }
 
-/* Typographies */
-.ff-serif { font-family: var(--ff-serif); }
-.ff-sans-cond { font-family: var(--ff-sans-cond); }
-.ff-sans-normal { font-family: var(--ff-sans-normal); }
-
 /* Color */
-.text-dark { color: rgb(var(--clr-dark)); }
-.text-med-dark{ color: rgb(var(--clr-med-dark)); }
-.text-light { color: rgb(var(--clr-light)); }
-.text-white { color: rgb(var(--clr-white)); }
+.text-dark {
+  color: rgb(var(--clr-dark));
+}
+.text-med-dark {
+  color: rgb(var(--clr-med-dark));
+}
+.text-light {
+  color: rgb(var(--clr-light));
+}
+.text-white {
+  color: rgb(var(--clr-white));
+}
 
-.bg-dark { background-color: rgb(var(--clr-dark)); }
-.bg-med-dark{ background-color: rgb(var(--clr-med-dark)); }
-.bg-light { background-color: rgb(var(--clr-light)); }
-.bg-white { background-color: rgb(var(--clr-white)); }
+.bg-dark {
+  background-color: rgb(var(--clr-dark));
+}
+.bg-med-dark {
+  background-color: rgb(var(--clr-med-dark));
+}
+.bg-light {
+  background-color: rgb(var(--clr-light));
+}
+.bg-white {
+  background-color: rgb(var(--clr-white));
+}
