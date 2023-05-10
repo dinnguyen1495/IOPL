@@ -1,3 +1,26 @@
+const bookSocket = new WebSocket(
+  'ws://'
+  + window.location.host
+  + '/ws/ioplibrary/'
+);
+
+bookSocket.onmessage = function(e) {
+  let data = JSON.parse(e.data);
+  console.log(e.data);
+  
+  if (data["type"] === "book_delete") {
+    $("#book-item-" + data["book_id"]).remove();
+  };
+
+  if (data["type"] === "book_change") {
+    $("#book-item-" + data["book_id"]).load(location.href + " #book-item-" + data["book_id"] + ">*");
+  }
+};
+
+bookSocket.onclose = function(e) {
+  console.error('Book socket closed unexpectedly ' + e);
+};
+
 function update_book_list(data) {
     $("#search-result-notify").html(
         "<p id=\"search-result-text\">Found <b><u>" + data["result_number"] + " books</u></b> in the library</p>"
@@ -6,7 +29,7 @@ function update_book_list(data) {
     let filtered_list = ""
     for (let i = 0; i < data["books"].length; i++) {
         filtered_list +=
-            "<div class=\"book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3\">\n" +
+            "<div id=\"book-item-" + data["books"][i]["book_id"] + "\" class=\"book-container d-flex flex-row align-items-center justify-content-center my-2 px-4 py-3\">\n" +
             "    <div class=\"book-cover-container\">\n" +
             "        <img class=\"book-cover\" src=\"" + data["books"][i]["cover"] + "\" alt=\"\"/>\n" +
             "    </div>\n" +
