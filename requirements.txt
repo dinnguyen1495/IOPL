@@ -1,2 +1,7 @@
+django
+channels[daphne]
+channels-redis
+redis
 django-import-export
 google-api-python-client
+pillow
