@@ -21,13 +21,20 @@ class Field(models.Model):
 
 
 def get_default_field():
-    fields = ["Physics", "Mechanics", "Nanotechnology", "Mathematics", "Programming"]
+    fields = [
+        "Physics",
+        "Mechanics",
+        "Nanotechnology",
+        "Mathematics",
+        "Programming",
+        "Others",
+    ]
     default_field = None
     for name in fields:
         field, _ = Field.objects.get_or_create(field_name=name)
         field.save()
         if default_field is None:
-            default_field = field
+            default_field = field.pk
     return default_field
 
 
@@ -51,7 +58,7 @@ class Book(models.Model):
         THESIS = "Thesis", _("Thesis")
 
     book_id = models.PositiveIntegerField(
-        "ID", primary_key=True, unique=True, default=0
+        "ID", primary_key=True, unique=True, default=100
     )
     type = models.CharField(
         "Type",
@@ -91,7 +98,7 @@ class Book(models.Model):
     )
     isbn = models.CharField(
         "ISBN",
-        max_length=20,
+        max_length=17,
         validators=[ISBNValidator],
         null=True,
     )

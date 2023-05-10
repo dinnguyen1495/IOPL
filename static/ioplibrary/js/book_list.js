@@ -7,13 +7,13 @@ bookSocket.onmessage = function (e) {
   console.log(e.data);
 
   if (data["type"] === "book_delete") {
+    $("#search-result-notify").load(" #search-result-notify>*");
     $("#book-item-" + data["book_id"]).remove();
   }
 
   if (data["type"] === "book_change") {
-    $("#book-item-" + data["book_id"]).load(
-      location.href + " #book-item-" + data["book_id"] + ">*"
-    );
+    $("#search-result-notify").load(" #search-result-notify>*");
+    $("#book-list").load(location.href + " #book-list>*", "");
   }
 };
 
