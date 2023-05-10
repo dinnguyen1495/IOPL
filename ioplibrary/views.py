@@ -1,44 +1,52 @@
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView
 from .models import Book, Field, Borrower
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 class BookListView(ListView):
     model = Book
-    template_name = 'books/book_list.html'
+    template_name = "books/book_list.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(BookListView, self).get_context_data(*args, **kwargs)
-        context['object_list'] = Book.objects.order_by("book_id")
-        context['result_number'] = context['object_list'].count()
-        context['types'] = ["Book", "Thesis"]
-        context['field_list'] = Field.objects.all()
-        context['borrowers'] = reversed(Borrower.objects.all())
-        context['book_columns'] = ["Inventory Number", "Title", "Publisher", "ISBN", "Year"]
+        context["object_list"] = Book.objects.order_by("book_id")
+        context["result_number"] = context["object_list"].count()
+        context["types"] = ["Book", "Thesis"]
+        context["field_list"] = Field.objects.all()
+        context["borrowers"] = reversed(Borrower.objects.all())
+        context["book_columns"] = [
+            "Inventory Number",
+            "Title",
+            "Publisher",
+            "ISBN",
+            "Year",
+        ]
         return context
 
 
 def search_book(request):
-    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+    is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
     filtered_books = []
 
     if request.method == "GET" and is_ajax:
-        book_type = request.GET['book_type']
-        query = request.GET['query']
-        field = request.GET['field']
-        column = request.GET['column']
+        book_type = request.GET["book_type"]
+        query = request.GET["query"]
+        field = request.GET["field"]
+        column = request.GET["column"]
 
         queryset = None
-        if book_type != 'All':
+        if book_type != "All":
             queryset = Book.objects.filter(type=book_type).order_by("book_id")
         else:
             queryset = Book.objects.all()
 
         if query == "":
-            if field != 'All':
-                queryset = Book.objects.filter(field__field_name=field).order_by("book_id")
+            if field != "All":
+                queryset = Book.objects.filter(field__field_name=field).order_by(
+                    "book_id"
+                )
 
-        if field != 'All':
+        if field != "All":
             queryset = Book.objects.filter(field__field_name=field).order_by("book_id")
 
         query_dict = {
@@ -50,9 +58,15 @@ def search_book(request):
             "year": queryset.filter(year__startswith=query),
         }
 
-        if column == 'all':
-            queryset = query_dict["title"] | query_dict["authors"] | query_dict["publisher"] | query_dict["inventory number"] | \
-                       query_dict["isbn"] | query_dict["year"]
+        if column == "all":
+            queryset = (
+                query_dict["title"]
+                | query_dict["authors"]
+                | query_dict["publisher"]
+                | query_dict["inventory number"]
+                | query_dict["isbn"]
+                | query_dict["year"]
+            )
         else:
             queryset = query_dict[column]
 
@@ -71,9 +85,19 @@ def search_book(request):
                 "units": book.units,
                 "borrowed": book.get_borrowed(),
                 "available": book.get_availability(),
-                "cover": book.cover.url
+                "cover": book.cover.url,
             }
             filtered_books.append(book_info)
 
-        return JsonResponse({"books": filtered_books, "result_number": len(filtered_books)})
-    return JsonResponse({'error': 'Something is wrong!'})
+        return JsonResponse(
+            {"books": filtered_books, "result_number": len(filtered_books)}
+        )
+    return JsonResponse({"error": "Something is wrong!"})
+
+
+def admin_view_books(request):
+    return HttpResponseRedirect("/admin/ioplibrary/book")
+
+
+def admin_view_borrowers(request):
+    return HttpResponseRedirect("/admin/ioplibrary/borrower")
