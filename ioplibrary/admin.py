@@ -18,7 +18,7 @@ from .resources import BookResource
 
 
 class CustomAdminSite(admin.AdminSite):
-    site_title = gettext_lazy("IOP")
+    site_title = gettext_lazy("IOPL")
 
 
 class BookTable(admin.TabularInline):
