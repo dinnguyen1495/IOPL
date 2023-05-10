@@ -2,7 +2,7 @@
   color: var(--clr-dark);
 }
 
-input[type=radio] {
+input[type="radio"] {
   width: 16px;
   height: 16px;
 }
@@ -97,12 +97,14 @@ footer {
   position: fixed;
   right: 4%;
   bottom: 4%;
-  width: 8vh;
+  width: 64px;
+  height: 64px;
+  max-width: 100%;
   z-index: 999;
   text-align: center;
 }
 
-.back-to-top:hover{
+.back-to-top:hover {
   cursor: pointer;
 }
 
