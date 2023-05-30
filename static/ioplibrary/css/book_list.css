@@ -52,6 +52,7 @@ input[type="radio"] {
 }
 
 .book-container {
+  min-width: 150px;
   border: 2px solid rgb(var(--clr-med-dark));
   border-radius: 1rem;
 }
@@ -64,6 +65,7 @@ input[type="radio"] {
 }
 
 .book-cover {
+  min-width: 150px;
   width: 150px;
   height: 200px;
   border-radius: 0.3rem;
@@ -71,6 +73,7 @@ input[type="radio"] {
 
 ul {
   list-style-type: none;
+  padding-left: 0;
 }
 
 li {
@@ -108,7 +111,11 @@ footer {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+
   .book-cover-container {
     display: none;
     padding: 0;
@@ -134,11 +141,11 @@ footer {
 @media (min-width: 768px) {
   .book-cover-container {
     display: block;
-    flex: 1 1 0;
+    flex: 1 0 0;
   }
 
   .book-information-container {
-    flex: 5 5 0;
+    flex: 5 6 0;
   }
 
   .book-information-list {
