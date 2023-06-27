@@ -157,4 +157,4 @@ CHANNEL_LAYERS = {
     },
 }
 
-LOGIN_REDIRECT_URL = "/admin/ioplibrary/book/"
+LOGIN_REDIRECT_URL = "/adminsite/ioplibrary/book/"
