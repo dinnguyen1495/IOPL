@@ -163,7 +163,6 @@ class BorrowerAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin_site = CustomAdminSite()
-admin_site.register(User)
 admin_site.register(Book, BookAdmin)
 admin_site.register(Borrower, BorrowerAdmin)
 admin_site.register(Field)
