@@ -15,7 +15,6 @@ class CustomAdminSite(admin.AdminSite):
     site_title = gettext_lazy("IOPL")
 
 
-@admin.register(User)
 class BookTable(admin.TabularInline):
     model = Book
 
