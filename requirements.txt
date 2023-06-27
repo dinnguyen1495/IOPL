@@ -5,3 +5,4 @@ redis
 django-import-export
 google-api-python-client
 pillow
+whitenoise
