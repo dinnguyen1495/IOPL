@@ -3,6 +3,7 @@ from django import forms
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats import base_formats
@@ -163,6 +164,7 @@ class BorrowerAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin_site = CustomAdminSite()
+admin_site.register(User)
 admin_site.register(Book, BookAdmin)
 admin_site.register(Borrower, BorrowerAdmin)
 admin_site.register(Field)
