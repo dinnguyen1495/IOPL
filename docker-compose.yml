@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7.0.11
+    container_name: iopl_redis
+    expose:
+      - "6379"
+  django:
+    build: ./IOPL
+    container_name: iopl_backend
+    environment:
+      - IOPLMODE=prod
+    volumes:
+      - ./IOPL:/app/backend
+      - ./IOPL/media:/app/backend/media
+    expose:
+      - "8000"
+    links:
+      - redis
