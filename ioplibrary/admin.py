@@ -59,7 +59,7 @@ class BookAdmin(ImportExportModelAdmin):
         "display_cover",
         "title",
     )
-    readonly_fields = ("display_cover",)
+    readonly_fields = ("inventory_number", "display_cover")
     inlines = (BorrwerInLine,)
     show_close_button = True
     resource_class = BookResource
@@ -81,7 +81,7 @@ class BookAdmin(ImportExportModelAdmin):
                 obj.book_id = (
                     Book.objects.filter().order_by("book_id").last().book_id + 1
                 )
-            obj.inventory_number = f"{obj.book_id} CSST {get_type(obj.type)} {obj.year}"
+        obj.inventory_number = f"{obj.book_id} CSST {get_type(obj.type)} {obj.year}"
         obj.save()
         return super(BookAdmin, self).save_model(request, obj, form, change)
 
